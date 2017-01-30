@@ -8,8 +8,9 @@ import json
 import codecs
 import bottle
 
-from .muland import Muland, MulandRunError
+from .muland import MulandRunError
 from .mulanddb import MulandDB, ModelNotFound
+from .fixedsupply import FixedSupply
 from . import xmlparser
 from . import app
 
@@ -18,7 +19,7 @@ __all__ = ['post_handler']
 _model_re = re.compile('[a-z]')
 _utf8reader = codecs.getreader('utf-8')
 
-@app.post('/<model>')
+@app.post('/fs/<model>')
 def post_handler(model): # pylint: disable=too-many-branches,too-many-statements
     '''Handles POST requests to server'''
     # Validate model name
@@ -85,9 +86,9 @@ def post_handler(model): # pylint: disable=too-many-branches,too-many-statements
         raise bottle.HTTPError(404)
 
     # Run Mu-Land
-    mu = Muland(**mudata)
+    fs = FixedSupply
     try:
-        mu.run()
+        fs.run('model', False, mudata)
     except MulandRunError as e:
         raise bottle.HTTPError(500, exception=e)
 

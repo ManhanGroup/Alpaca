@@ -2,11 +2,16 @@ import os
 import csv
 import math
 import shutil
+import sys
 
 from muland import Muland
 
 
 class FixedSupply(object):
+
+    def __init__(self):
+        shutil.copy(os.path.join(sys.argv[1], 'input', 'bids_adjustments.csv'), os.path.join(sys.argv[1], 'input', 'bids_adjustments_0.csv'))
+
     def load_totals(self, demand_path):
         control_totals = [0] * 29
         with open(demand_path, 'r') as csvfile:
@@ -70,8 +75,8 @@ class FixedSupply(object):
         os.remove('temp.csv')
         return
 
-    def run(self, modelDir, initBids):
-        muland = Muland('input')
+    def run(self, modelDir, initBids, mudata):
+        muland = Muland(**mudata)
         control_totals = self.load_totals(os.path.join(modelDir, 'input', 'demand.csv'))
         # make backup copy of bid adjustments
         if (initBids):
@@ -126,9 +131,3 @@ class FixedSupply(object):
             for hx in range(29):
                 bhWriter.writerow([hx + 1, net_adjust[hx]])
         return converged
-
-
-if __name__ == "__main__":
-    import sys
-    shutil.copy(os.path.join(sys.argv[1], 'input', 'bids_adjustments.csv'), os.path.join(sys.argv[1], 'input', 'bids_adjustments_0.csv'))
-    fsRun('model', False)
