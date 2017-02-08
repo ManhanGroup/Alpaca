@@ -19,15 +19,16 @@ __all__ = ['post_handler']
 _model_re = re.compile('[a-z]')
 _utf8reader = codecs.getreader('utf-8')
 
+
 @app.post('/fs/<model>')
-def post_handler(model): # pylint: disable=too-many-branches,too-many-statements
+def post_handler(model):  # pylint: disable=too-many-branches,too-many-statements
     '''Handles POST requests to server'''
     # Validate model name
     if _model_re.match(model) is None:
         raise bottle.HTTPError(404)
 
     # Extract data acoording to Content-Type
-    ctype = bottle.request.headers['Content-Type'].lower() # pylint: disable=unsubscriptable-object
+    ctype = bottle.request.headers['Content-Type'].lower()  # pylint: disable=unsubscriptable-object
     mime = ctype.split(';')[0]
     if mime == 'application/json':
         data_in = bottle.request.json
@@ -37,7 +38,7 @@ def post_handler(model): # pylint: disable=too-many-branches,too-many-statements
             raise bottle.HTTPError(400, 'Specify charset=utf-8 for '
                                         'for this MIME type.')
         loc = xmlparser.load(_utf8reader(bottle.request.body))
-        data_in = {'loc': loc} # pylint: disable=redefined-variable-type
+        data_in = {'loc': loc}  # pylint: disable=redefined-variable-type
         output_mime = 'xml'
     else:
         raise bottle.HTTPError(400, 'Invalid Content-Type')
@@ -88,7 +89,7 @@ def post_handler(model): # pylint: disable=too-many-branches,too-many-statements
     # Run Mu-Land
     fs = FixedSupply
     try:
-        fs.run('model', False, mudata)
+        mu = fs.run('model', False, mudata)
     except MulandRunError as e:
         raise bottle.HTTPError(500, exception=e)
 
