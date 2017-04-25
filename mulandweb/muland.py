@@ -8,16 +8,21 @@ import csv
 
 from . import config
 
+
 class MulandException(Exception):
     pass
+
 
 class DependencyError(MulandException):
     pass
 
+
 class MulandRunError(MulandException):
     pass
 
+
 MulandData = namedtuple('MulandData', ['header', 'records'])
+
 
 class Muland:
     '''Access Muland Application'''
@@ -25,13 +30,28 @@ class Muland:
     muland_binary = config.muland_binary
     work_folder = config.muland_work
 
-    input_files = ['agents', 'agents_zones', 'bids_adjustments',
-    'bids_functions', 'demand', 'demand_exogenous_cutoff',
-    'real_estates_zones', 'rent_adjustments', 'rent_functions',
-    'subsidies', 'supply', 'zones']
+    input_files = [
+        'agents',
+        'agents_zones',
+        'bids_adjustments',
+        'bids_functions',
+        'demand',
+        'demand_exogenous_cutoff',
+        'real_estates_zones',
+        'rent_adjustments',
+        'rent_functions',
+        'subsidies',
+        'supply',
+        'zones'
+    ]
 
-    output_files = ['bids', 'bh', 'location', 'location_probability',
-    'rents']
+    output_files = [
+        'bids',
+        'bh',
+        'location',
+        'location_probability',
+        'rents'
+    ]
 
     csv_delimiter = ';'
 
