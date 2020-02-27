@@ -66,7 +66,7 @@ ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 SET(LIBRARY_BUILD_FLAG STATIC)
 
 ##############################################################################
-### Mingw specific oprtions
+### Mingw specific options
 IF(MINGW)
   MESSAGE( STATUS "** Cross compilation with Mingw")
   MESSAGE( STATUS "** 64bit version")
@@ -78,8 +78,8 @@ IF(MINGW)
   # Project Compiler Flags
   SET(CMAKE_CXX_FLAGS "-Wall -Wno-long-long -pedantic")
   # Linker Flags
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-auto-import -Wl,--no-undefined -static-libgcc")
-  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import -Wl,--no-undefined -static-libgcc")
+  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-auto-import -Wl,--no-undefined -static-libgcc -static-libstdc++")
+  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import -Wl,--no-undefined -static-libgcc -static-libstdc++")
 ENDIF()
 
 ##############################################################################

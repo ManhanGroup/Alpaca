@@ -9,6 +9,6 @@ On unix/linux systems
 
 The windows 64bit version requires mingw64 for cross compile.
 - sh builder.sh -m 64 -u : This will generate the build-w64 directory from the sources.
-- cd build && make  : This will build the binary 
+- cd build-w64 && make  : This will build the binary 
 - sudo make install : Will create a portable binary for windows on the directory /opt/mu-land/bin/
 
